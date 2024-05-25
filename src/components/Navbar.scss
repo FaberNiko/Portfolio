@@ -1,0 +1,167 @@
+@use "./sass/colors" as *;
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: $main-color;
+	border-bottom: 1px solid white;
+	z-index: 12;
+
+	.nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+
+
+		&__toggle {
+			background: transparent;
+			border: none;
+			margin: 1rem;
+		}
+
+		&__toggle,
+		&__close {
+			color: $secondary-color;
+			font-size: 1.8rem;
+			cursor: pointer;
+			background: transparent;
+			border: none;
+			margin: 1rem;
+		}
+
+		&__logo {
+			text-decoration: none;
+			text-transform: uppercase;
+			color: $secondary-color;
+			font-weight: bold;
+			font-size: 1.2rem;
+			margin: 1rem;
+
+			span {
+				background: linear-gradient(60deg, #be2660, #d69509);
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+		}
+
+		&__logo:hover {
+			background: linear-gradient(60deg, #be2660, #d69509);
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		&__menu {
+			position: fixed;
+			top: 0;
+			width: 80%;
+			height: 100%;
+			backdrop-filter: blur(16px);
+			padding: 6rem 3rem 0;
+			left: -100%;
+			background-color: #28055369;
+			transition: left 0.4s;
+		}
+
+		&__list {
+			display: flex;
+			flex-direction: column;
+			row-gap: 4rem;
+			list-style: none;
+			padding: 2em 0;
+		}
+
+		&__link {
+			text-decoration: none;
+			font-size: 1rem;
+			color: #fff;
+			text-transform: uppercase;
+		}
+
+		&__close {
+			position: absolute;
+			width: 3rem;
+			padding: 0.3em 0;
+			top: 0;
+			left: 0;
+		}
+
+		.show-menu {
+			left: 0;
+		}
+	}
+}
+
+
+
+@media (min-width: 768px) {
+	.header {
+		.nav {
+			&__logo {
+				font-size: 1.5rem;
+			}
+
+			&__toggle {
+				font-size: 2.5rem;
+			}
+			&__link {
+				font-size: 1.2rem;
+				transition: color .3s;
+
+				&:hover {
+					color: orange;
+				}
+			}
+			&__menu {
+				width: 60%;
+			}
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	.header {
+		.nav {
+			margin: 1rem;
+			&__toggle,
+			&__close {
+				display: none;
+			}
+
+			&__menu {
+				height: 100%;
+				text-align: center;
+				position: relative;
+				padding: 0;
+				background-color: #110520;
+				left: 0;
+			}
+
+			&__list {
+				flex-direction: row;
+				padding: 0;
+				justify-content: flex-end;
+				align-items: center;
+			}
+
+			&__item {
+				padding: 1rem 2rem;
+
+				
+			}
+
+			&__link {
+				transition:  color .3s;
+
+
+				&:hover {
+
+					color: orange;
+				}
+			}
+
+		
+		}
+	}
+}
