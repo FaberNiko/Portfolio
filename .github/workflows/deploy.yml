@@ -33,7 +33,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
 
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
 
         run: npm run deploy
 
