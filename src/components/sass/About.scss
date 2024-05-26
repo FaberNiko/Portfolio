@@ -10,7 +10,7 @@
 
 	&__title {
 		padding: 2rem 0;
-		margin-top: 5rem;
+		margin-top: 4rem;
 		color: $secondary-color;
 		text-align: center;
 		font-size: 1.8rem;
@@ -23,6 +23,7 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
+		// padding: 1rem;
 
 		.photo {
 			height: 12rem;
@@ -83,6 +84,7 @@
 
 			.show-tech {
 				font-size: 1.1rem;
+				margin-bottom: 5rem;
 			}
 		}
 	}

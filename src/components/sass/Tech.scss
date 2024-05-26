@@ -44,10 +44,10 @@
 		.images {
 			display: flex;
 			align-items: center;
-				justify-content: center;
+			justify-content: center;
 			width: 100%;
-            margin-top: 2rem;
-            padding: 1rem;
+            margin: 1rem 0;
+            padding: 1.5rem;
 			// height: 100%;
 
 			svg {
@@ -76,7 +76,7 @@
 			}
 
 			.images {
-				margin-top: 4rem;
+				margin: 4rem 0;
 
 				svg {
 					margin: 2rem;
