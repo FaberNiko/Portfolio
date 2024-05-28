@@ -9,6 +9,7 @@ function Contact() {
 		AOS.init({ duration: 1000 });
 	}, []);
 	const formRef = useRef();
+
 	const [form, setForm] = useState({
 		name: "",
 		email: "",
@@ -16,6 +17,7 @@ function Contact() {
 	});
 
 	const [loading, setLoading] = useState(false);
+	const [errors, setErrors] = useState({})
 
 	const hanldeChange = e => {
 		const { name, value } = e.target;
@@ -23,7 +25,25 @@ function Contact() {
 	};
 	const hanldeSubmit = e => {
 		e.preventDefault();
-		setLoading(true);
+		const validationErrors = {}
+		if(!form.name.trim()) {
+			validationErrors.name = "Name is required"
+		}
+		if(!form.email.trim()) {
+			validationErrors.email = "Email is required"
+		} else if(!/\S+@\S\.\S+/.test(form.email)) {
+			validationErrors.email = "Email is not valid"
+		}
+		if (!form.message.trim()) {
+			validationErrors.message = "Message is required"
+		}
+
+		setLoading(validationErrors);
+
+		if(Object.keys(validationErrors).length === 0) {
+			alert("Form submitted successfully")
+		}
+
 
 		emailjs
 			.send(
@@ -67,7 +87,8 @@ function Contact() {
 							value={form.name}
 							onChange={hanldeChange}
 							placeholder="What's your name?"
-						/>
+							/>
+							{errors.name && <span>{errors.name}</span>}
 					</label>
 					<label>
 						<span>Your Email</span>
@@ -77,7 +98,9 @@ function Contact() {
 							value={form.email}
 							onChange={hanldeChange}
 							placeholder="What's your email?"
+				
 						/>
+						{errors.email && <span>{errors.email}</span>}
 					</label>
 					<label>
 						<span>Your Message</span>
@@ -88,8 +111,9 @@ function Contact() {
 							onChange={hanldeChange}
 							placeholder="What do you want to say?"
 						/>
+						{errors.message && <span>{errors.message}</span>}
 					</label>
-					<button type="submit">{loading ? "Sending..." : "Send"}</button>
+					<button onClick={hanldeSubmit}type="submit">{loading ? "Sending..." : "Send"}</button>
 				</form>
 			</div>
 			<div className="links" >
