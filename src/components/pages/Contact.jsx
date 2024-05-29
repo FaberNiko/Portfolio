@@ -17,33 +17,28 @@ function Contact() {
 	});
 
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState({})
+	const [errors, setErrors] = useState({});
 
-	const hanldeChange = e => {
+	const handleChange = e => {
 		const { name, value } = e.target;
 		setForm({ ...form, [name]: value });
 	};
-	const hanldeSubmit = e => {
+
+	const validateForm = () => {
+		let tempErrors = {};
+		if (!form.name) tempErrors.name = "Name is required";
+		if (!form.email) tempErrors.email = "Email is required";
+		else if (!/\S+@\S+\.\S+/.test(form.email)) tempErrors.email = "Email is invalid";
+		if (!form.message) tempErrors.message = "Message is required";
+		setErrors(tempErrors);
+		return Object.keys(tempErrors).length === 0;
+	};
+
+	const handleSubmit = e => {
 		e.preventDefault();
-		const validationErrors = {}
-		if(!form.name.trim()) {
-			validationErrors.name = "Name is required"
-		}
-		if(!form.email.trim()) {
-			validationErrors.email = "Email is required"
-		} else if(!/\S+@\S\.\S+/.test(form.email)) {
-			validationErrors.email = "Email is not valid"
-		}
-		if (!form.message.trim()) {
-			validationErrors.message = "Message is required"
-		}
+		if (!validateForm()) return;
 
-		setLoading(validationErrors);
-
-		if(Object.keys(validationErrors).length === 0) {
-			alert("Form submitted successfully")
-		}
-
+		setLoading(true);
 
 		emailjs
 			.send(
@@ -60,35 +55,36 @@ function Contact() {
 			)
 			.then(() => {
 				setLoading(false);
-				alert("Thank you. I will get back to you ass soon as possible");
+				alert("Thank you. I will get back to you as soon as possible.");
 				setForm({
 					name: "",
 					email: "",
 					message: "",
 				});
-			}),
-			error => {
+				setErrors({});
+			})
+			.catch(error => {
 				setLoading(false);
-
 				console.log(error);
 				alert("Something went wrong.");
-			};
+			});
 	};
+
 	return (
-		<section className="section contact-section" id="contact" >
+		<section className="section contact-section" id="contact">
 			<h2 className="contact-section__title" data-aos="fade-left">Contact</h2>
 			<div className="form-box" data-aos="fade-left">
-				<form ref={formRef} onSubmit={hanldeSubmit} className="contact-form">
+				<form ref={formRef} onSubmit={handleSubmit} className="contact-form">
 					<label>
 						<span>Your Name</span>
 						<input
 							type="text"
 							name="name"
 							value={form.name}
-							onChange={hanldeChange}
+							onChange={handleChange}
 							placeholder="What's your name?"
-							/>
-							{errors.name && <span>{errors.name}</span>}
+						/>
+						{errors.name && <span className="error">{errors.name}</span>}
 					</label>
 					<label>
 						<span>Your Email</span>
@@ -96,11 +92,10 @@ function Contact() {
 							type="email"
 							name="email"
 							value={form.email}
-							onChange={hanldeChange}
+							onChange={handleChange}
 							placeholder="What's your email?"
-				
 						/>
-						{errors.email && <span>{errors.email}</span>}
+						{errors.email && <span className="error">{errors.email}</span>}
 					</label>
 					<label>
 						<span>Your Message</span>
@@ -108,21 +103,25 @@ function Contact() {
 							rows="7"
 							name="message"
 							value={form.message}
-							onChange={hanldeChange}
+							onChange={handleChange}
 							placeholder="What do you want to say?"
 						/>
-						{errors.message && <span>{errors.message}</span>}
+						{errors.message && <span className="error">{errors.message}</span>}
 					</label>
-					<button onClick={hanldeSubmit}type="submit">{loading ? "Sending..." : "Send"}</button>
+					<button type="submit">{loading ? "Sending..." : "Send"}</button>
 				</form>
 			</div>
-			<div className="links" >
-				<i class="fa-brands fa-github"><a href="https://github.com/FaberNiko" target="blank"> github.com</a></i>
-				<i class="fa-brands fa-linkedin"><a href="https://www.linkedin.com/in/nikodem-faber-b00832244/" target="blank"> linkedin.com</a> </i>
+			<div className="links">
+				<i className="fa-brands fa-github">
+					<a href="https://github.com/FaberNiko" target="_blank" rel="noopener noreferrer">github.com</a>
+				</i>
+				<i className="fa-brands fa-linkedin">
+					<a href="https://www.linkedin.com/in/nikodem-faber-b00832244/" target="_blank" rel="noopener noreferrer">linkedin.com</a>
+				</i>
 			</div>
-	
 		</section>
 	);
 }
 
 export default Contact;
+
